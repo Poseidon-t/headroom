@@ -1,6 +1,6 @@
 import Foundation
 
-// `Unslow --selftest` checks the parsers against output captured from this Mac.
+// `Headroom --selftest` checks the parsers against output captured from this Mac.
 func runSelfTest() -> Int32 {
     var failures = 0
     func check(_ name: String, _ ok: Bool) {
@@ -61,7 +61,7 @@ func runSelfTest() -> Int32 {
     {"type":"ai-title","sessionId":"s","aiTitle":"System performance improvement"}
     """
     check("latest ai title wins", conversationTitle(transcript) == "System performance improvement")
-    check("custom title beats ai title", conversationTitle(transcript + "\n{\"type\":\"custom-title\",\"customTitle\":\"Unslow\"}") == "Unslow")
+    check("custom title beats ai title", conversationTitle(transcript + "\n{\"type\":\"custom-title\",\"customTitle\":\"Headroom\"}") == "Headroom")
     check("first prompt when untitled", firstPrompt(transcript) == "free up the system and make it faster")
     check("no title in empty text", conversationTitle("") == nil)
 

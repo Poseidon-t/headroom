@@ -28,7 +28,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, UNUser
     private let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     private let menu = NSMenu()
     private let sampler = Sampler()
-    private let queue = DispatchQueue(label: "unslow.sample")
+    private let queue = DispatchQueue(label: "headroom.sample")
     private var snap = Snapshot()
     private var caches = knownCaches
     private var lastNotified: [String: Date] = [:]
@@ -186,7 +186,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, UNUser
         let login = Item("Open at login") { [weak self] in self?.toggleLogin() }
         login.state = SMAppService.mainApp.status == .enabled ? .on : .off
         menu.addItem(login)
-        menu.addItem(Item("Quit Unslow") { NSApp.terminate(nil) })
+        menu.addItem(Item("Quit Headroom") { NSApp.terminate(nil) })
     }
 
     private func appMenu(_ g: AppGroup) -> NSMenu {

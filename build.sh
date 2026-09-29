@@ -1,5 +1,5 @@
 #!/bin/zsh
-# Builds Unslow.app and installs it to /Applications. Set SIGN_ID to a
+# Builds Headroom.app and installs it to /Applications. Set SIGN_ID to a
 # code-signing identity in your keychain; without it the app is signed ad hoc.
 # Pass --no-install to stop after the build.
 set -euo pipefail
@@ -22,22 +22,22 @@ fi
 
 swiftc -O -swift-version 5 $OVERLAY \
   -framework AppKit -framework UserNotifications -framework ServiceManagement \
-  main.swift Core.swift SelfTest.swift -o build/Unslow
+  main.swift Core.swift SelfTest.swift -o build/Headroom
 
-./build/Unslow --selftest
+./build/Headroom --selftest
 
-APP=build/Unslow.app
+APP=build/Headroom.app
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS"
-cp build/Unslow "$APP/Contents/MacOS/Unslow"
+cp build/Headroom "$APP/Contents/MacOS/Headroom"
 cat > "$APP/Contents/Info.plist" <<'PLIST'
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0"><dict>
-  <key>CFBundleIdentifier</key><string>com.sarathsabarish.unslow</string>
-  <key>CFBundleName</key><string>Unslow</string>
-  <key>CFBundleDisplayName</key><string>Unslow</string>
-  <key>CFBundleExecutable</key><string>Unslow</string>
+  <key>CFBundleIdentifier</key><string>com.sarathsabarish.headroom</string>
+  <key>CFBundleName</key><string>Headroom</string>
+  <key>CFBundleDisplayName</key><string>Headroom</string>
+  <key>CFBundleExecutable</key><string>Headroom</string>
   <key>CFBundlePackageType</key><string>APPL</string>
   <key>CFBundleShortVersionString</key><string>1.0</string>
   <key>CFBundleVersion</key><string>1</string>
@@ -45,12 +45,12 @@ cat > "$APP/Contents/Info.plist" <<'PLIST'
   <key>LSUIElement</key><true/>
 </dict></plist>
 PLIST
-codesign --force --sign "${SIGN_ID:--}" --identifier com.sarathsabarish.unslow --timestamp=none "$APP"
+codesign --force --sign "${SIGN_ID:--}" --identifier com.sarathsabarish.headroom --timestamp=none "$APP"
 
 [[ "${1:-}" == "--no-install" ]] && { echo "built $APP"; exit 0; }
 
-pkill -x Unslow || true
-rm -rf /Applications/Unslow.app
-cp -R "$APP" /Applications/Unslow.app
-open /Applications/Unslow.app
-echo "installed /Applications/Unslow.app"
+pkill -x Headroom || true
+rm -rf /Applications/Headroom.app
+cp -R "$APP" /Applications/Headroom.app
+open /Applications/Headroom.app
+echo "installed /Applications/Headroom.app"
